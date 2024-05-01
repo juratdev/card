@@ -1,11 +1,95 @@
 <script setup>
-import { ref, shallowRef, computed, watch, nextTick } from "vue";
+import { ref } from "vue";
+import ApexCharts from "apexcharts";
 import Button from "./components/Button.vue";
-import Chart from "chart.js/auto";
 
-const wegihts = ref([]);
-const wegihtChartEl = ref(null);
-const wegihtChart = shallowRef(null);
+function generateDayWiseTimeSeries(s, count) {
+  let values = [
+    [4, 3, 10, 9, 29, 19, 25, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5],
+    [2, 3, 8, 7, 22, 16, 23, 7, 11, 5, 12, 5, 10, 4, 15, 2, 6, 2],
+  ];
+  let i = 0;
+  let series = [];
+  let x = new Date("11 Nov 2012").getTime();
+  while (i < count) {
+    series.push([x, values[s][i]]);
+    x += 86400000;
+    i++;
+  }
+  return series;
+}
+
+const series = ref([
+  {
+    name: "XYZ MOTORS",
+    data: [
+      {
+        name: "Series A",
+        data: generateDayWiseTimeSeries(1, 18),
+      },
+      {
+        name: "Series B",
+        data: generateDayWiseTimeSeries(1, 18),
+      },
+    ],
+  },
+]);
+const options = {
+  chart: {
+    type: "area",
+    stacked: false,
+    height: 350,
+    zoom: {
+      type: "x",
+      enabled: true,
+      autoScaleYaxis: true,
+    },
+    toolbar: {
+      autoSelected: "zoom",
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  markers: {
+    size: 0,
+  },
+  title: {
+    text: "Stock Price Movement",
+    align: "left",
+  },
+  fill: {
+    type: "gradient",
+    gradient: {
+      shadeIntensity: 1,
+      inverseColors: false,
+      opacityFrom: 0.5,
+      opacityTo: 0,
+      stops: [0, 90, 100],
+    },
+  },
+  yaxis: {
+    labels: {
+      formatter: function (val) {
+        return (val / 1000000).toFixed(0);
+      },
+    },
+    title: {
+      text: "Price",
+    },
+  },
+  xaxis: {
+    type: "datetime",
+  },
+  tooltip: {
+    shared: false,
+    y: {
+      formatter: function (val) {
+        return (val / 1000000).toFixed(0);
+      },
+    },
+  },
+};
 </script>
 
 <template>
@@ -110,6 +194,15 @@ const wegihtChart = shallowRef(null);
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <div id="chart">
+      <apexchart
+        type="area"
+        height="350"
+        :options="options"
+        :series="series"
+      ></apexchart>
     </div>
   </div>
 </template>
