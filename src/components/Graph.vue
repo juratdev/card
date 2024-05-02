@@ -1,11 +1,9 @@
 <script setup>
-import ApexCharts from "apexcharts";
 
 const series =  [{
   name: "Sample Data",
   data: [20,700,200, 400, 800, 50,79, 400]
 }]
-
 
 const chartOptions = {
   chart: {
