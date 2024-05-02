@@ -21,7 +21,7 @@ const headers = ref([
       increase: true,
       value: 0.5
     },
-    icon: './public/rise.svg',
+    icon: '/rise.svg',
     num1: '1.4451',
     num2: '1.4458',
     num3: '2',
@@ -32,7 +32,7 @@ const headers = ref([
       increase: false,
       value: 0.04
     },
-    icon: './public/down.svg',
+    icon: '/down.svg',
     num1: '49.6758',
     num2: '49.6758',
     num3: '2',
@@ -43,7 +43,7 @@ const headers = ref([
       increase: false,
       value: 0.04
     },
-    icon: './public/down.svg',
+    icon: '/down.svg',
     num1: '49.6758',
     num2: '49.6758',
     num3: '2',
@@ -54,7 +54,7 @@ const headers = ref([
       increase: true,
       value: 0.5
     },
-    icon: './public/rise.svg',
+    icon: '/rise.svg',
     num1: '1.4451',
     num2: '1.4458',
     num3: '2',
