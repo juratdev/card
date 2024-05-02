@@ -15,7 +15,7 @@ const variants = {
 </script>
 
 <template>
-  <tr :class="[variants[variant], styles]">
+  <tr :title="String" :class="[variants[variant], styles]">
     <slot name="prefix" />
     <slot/>
     <slot name="suffix" />

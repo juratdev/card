@@ -1,9 +1,17 @@
 <script setup>
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  data: Array,
+  percentage: Object,
+});
 
 const series =  [{
   name: "Sample Data",
-  data: [20,700,200, 400, 800, 50,79, 400]
+  data: props.data
 }]
+
+const color = props.percentage.increase ? '#49D39F' : '#F44336';
 
 const chartOptions = {
   chart: {
@@ -51,6 +59,7 @@ const chartOptions = {
   stroke: {
     curve: 'smooth',
     width: 3,
+    colors: [color]
   },
   fill: {
     type: 'gradient',

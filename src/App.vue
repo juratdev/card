@@ -1,56 +1,111 @@
 <script setup>
+import { ref } from 'vue';
 import Button from "./components/Button.vue";
 import Graph from "./components/Graph.vue";
-import TableRow from "./components/table/TableRow.vue";
 import TableData from "./components/table/TableData.vue";
 
+const items = ref([
 
+  {name: 'Trading pair',},
+  {name: 'Ask price',},
+  {name: 'Bid price',},
+  {name: 'Spread',},
+  {name: 'Market',},
+  {name: 'Action'},
+  ]);
+
+const headers = ref([
+  {
+    title: 'EUR/USD',
+    percentage: {
+      increase: true,
+      value: 0.5
+    },
+    icon: './public/rise.svg',
+    num1: '1.4451',
+    num2: '1.4458',
+    num3: '2',
+  },
+  {
+    title: 'EUR/USD',
+    percentage: {
+      increase: false,
+      value: 0.04
+    },
+    icon: './public/down.svg',
+    num1: '49.6758',
+    num2: '49.6758',
+    num3: '2',
+  },
+  {
+    title: 'EUR/USD',
+    percentage: {
+      increase: false,
+      value: 0.04
+    },
+    icon: './public/down.svg',
+    num1: '49.6758',
+    num2: '49.6758',
+    num3: '2',
+  },
+  {
+    title: 'EUR/USD',
+    percentage: {
+      increase: true,
+      value: 0.5
+    },
+    icon: './public/rise.svg',
+    num1: '1.4451',
+    num2: '1.4458',
+    num3: '2',
+  }
+]);
+
+function getPercentageLabel(value) {
+  return value >= 0.05 ? `+ ${ value } %` : `- ${value} %`
+}
 </script>
 
 <template>
   <div class="container px-4 mx-auto mt-10">
-    <div class="w-[700px] bg-black p-8 rounded-[20px]">
+    <div class="w-fit bg-black p-8 rounded-[20px]">
       <table class="text-left text-white">
         <thead>
-          <TableRow variant="primary">
-            <TableData variant="primary" title="Trading pair" />
-            <TableData variant="primary" title="Ask price" />
-            <TableData variant="primary" title="Bid price" />
-            <TableData variant="primary" title="Spread" />
-            <TableData variant="primary" title="Market" />
-            <TableData variant="primary" title="Action" />
-          </TableRow>
+          <tr class="text-sm font-medium whitespace-nowrap text-white-rgba">
+            <td v-for="(item, index) in items" :key="index" class="pr-12 table_data">
+              {{ item.name }}
+            </td>
+          </tr>
         </thead>
         <tbody>
-          <TableRow>
+          <tr v-for="(item, index) in headers" :key="index">
             <TableData>
-              <div class="flex flex-col">
-                <span class="font-medium">EUR/USD</span>
-                <div class="flex items-center gap-1">
-                  <span class="text-xs text-primary">+0.05%</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="10"
-                    height="10"
-                    viewBox="0 0 10 10"
-                    fill="none"
-                  >
-                    <path
-                      d="M4.9958 0.820007C5.42205 0.820007 5.81664 1.03709 6.04247 1.38626L6.08539 1.45792L9.04372 6.56209L9.06955 6.61459C9.14346 6.79737 9.17308 6.99503 9.156 7.19144C9.13893 7.38785 9.07563 7.57744 8.97129 7.74472C8.86695 7.912 8.72452 8.05222 8.55564 8.15394C8.38676 8.25566 8.19621 8.31599 7.99955 8.33001L7.91664 8.33334H2.0833L2.06289 8.33209L2.01622 8.33292C1.83064 8.32337 1.64952 8.27257 1.48605 8.1842C1.32257 8.09583 1.18086 7.97213 1.07122 7.82209L1.0258 7.75542C0.92657 7.59952 0.863143 7.42355 0.840088 7.24018C0.817032 7.05682 0.834922 6.87063 0.892468 6.69501L0.922468 6.61417L0.947468 6.56209L3.90247 1.46501C4.01055 1.2696 4.169 1.10672 4.36135 0.993286C4.55369 0.879856 4.77292 0.820023 4.99622 0.820007H4.9958Z"
-                      fill="#49D39F"
-                    />
-                  </svg>
-                </div>
-              </div>
+              <template #title>
+                <span>{{ item.title }}</span>
+              </template>
+              <template #content>
+                  <div class="flex items-center gap-1">
+                    <span :class="{'text-primary': item.percentage.increase, 'text-red-500': !item.percentage.increase }" v-if="item.percentage.value">{{ getPercentageLabel(item.percentage.value) }}</span>
+                    <img v-if="item.icon" :src="item.icon" alt="image">
+                  </div>
+              </template>
             </TableData>
-            <TableData title="1.4451" variant="default" />
-            <TableData title="1.4458" variant="default" />
-            <TableData title="2" />
-            <TableData><Graph /></TableData>
-            <TableData>
-              <Button title="Trade" variant="default" />
-            </TableData>
-          </TableRow>
+            <td :class="{'text-primary': item.num1 <= '1.4451', 'text-red-500': item.num1 >= '49.6758' }">
+              {{ item.num1 }}
+            </td>
+            <td :class="{'text-primary': item.num1 <= '1.4451', 'text-red-500': item.num1 >= '49.6758' }">
+              {{ item.num2 }}
+            </td>
+            <td>
+              {{ item.num3 }}
+            </td>
+            <td>
+              <Graph :data="[20,700,200, 400, 800, 50,79, 400]" :percentage="item.percentage" />
+            </td>
+            <td class="pl-10">
+              <Button variant="default" title="Trade" />
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -59,6 +114,8 @@ import TableData from "./components/table/TableData.vue";
   </div>
 </template>
 
-<style scoped>
-
+<style >
+.table_data:last-child {
+  padding-left: 40px;
+}
 </style>

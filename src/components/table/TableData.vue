@@ -17,11 +17,10 @@ const variants = {
 </script>
 
 <template>
-  <td :class="[variants[variant], styles]">
-    <slot name="prefix" />
-    {{title}}
-    <slot/>
-    <slot name="suffix" />
+  <td :class="variants[variant]">
+      <slot name="title"/>
+      <slot name="content"/>
+        <slot name="graph"/>
   </td>
 </template>
 
