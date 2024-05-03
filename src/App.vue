@@ -29,7 +29,7 @@ const data = ref([
     title: "EUR/USD",
     percentage: {
       increase: false,
-      value: 0.04,
+      value: 0.05,
     },
     icon: "/down.svg",
     num1: "49.6758",
@@ -40,7 +40,7 @@ const data = ref([
     title: "EUR/USD",
     percentage: {
       increase: false,
-      value: 0.04,
+      value: 0.05,
     },
     icon: "/down.svg",
     num1: "49.6758",
@@ -73,7 +73,13 @@ function getPercentageLabel(value) {
           <span class="inline-flex flex-col">
             <span>{{ data.title }}</span>
             <span class="inline-flex items-center gap-1">
-              <span>{{ getPercentageLabel(data.percentage.value) }}</span>
+              <span
+                :class="{
+                  'text-primary': data.percentage.value >= '0.5',
+                  'text-red-500': data.percentage.value <= '0.4',
+                }"
+                >{{ getPercentageLabel(data.percentage.value) }}</span
+              >
               <img v-if="data.icon" :src="data.icon" alt="image" />
             </span>
           </span>
