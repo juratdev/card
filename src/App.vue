@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import Button from "./components/Button.vue";
 import Graph from "./components/Graph.vue";
-import TableData from "./components/table/TableData.vue";
 import Table from "./components/Table.vue";
 
 const headers = ref([
@@ -69,7 +68,7 @@ function getPercentageLabel(value) {
 <template>
   <div class="w-full h-screen bg-black">
     <div class="container px-4 mx-auto pt-10">
-      <Table :headings="headers" :data="data">
+      <Table class="statistic-table" :headings="headers" :data="data">
         <template #trading_pair="{ data }">
           <span class="inline-flex flex-col">
             <span>{{ data.title }}</span>
@@ -121,5 +120,9 @@ function getPercentageLabel(value) {
 
 .table_data {
   padding: 0 32px;
+}
+
+.statistic-table tbody tr:last-child td {
+  padding-bottom: 14px;
 }
 </style>

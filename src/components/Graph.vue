@@ -1,36 +1,49 @@
+<template>
+  <div id="chart">
+    <apexchart
+      type="area"
+      width="109px"
+      :options="chartOptions"
+      :series="series"
+    ></apexchart>
+  </div>
+</template>
+
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 
 const props = defineProps({
   data: Array,
   percentage: Object,
 });
 
-const series =  [{
-  name: "Sample Data",
-  data: props.data
-}]
+const series = [
+  {
+    name: "Sample Data",
+    data: props.data,
+  },
+];
 
-const color = props.percentage.increase ? '#49D39F' : '#F44336';
+const color = props.percentage.increase ? "#49D39F" : "#F44336";
 
 const chartOptions = {
   chart: {
-    background: 'transparent',
-    type: 'line',
+    background: "transparent",
+    type: "line",
     zoom: {
-      enabled: false
+      enabled: false,
     },
     toolbar: {
       show: false,
-    }
+    },
   },
   dataLabels: {
-    enabled: false
+    enabled: false,
   },
   options: {
     chart: {
-      background: 'none',
-    }
+      background: "none",
+    },
   },
   tooltip: {
     enabled: false,
@@ -54,35 +67,25 @@ const chartOptions = {
     show: false,
     labels: {
       show: false,
-    }
+    },
   },
   stroke: {
-    curve: 'smooth',
+    curve: "smooth",
     width: 3,
-    colors: [color]
+    colors: [color],
   },
   fill: {
-    type: 'gradient',
+    type: "gradient",
     gradient: {
-      shade: 'none',
+      shade: "none",
       type: "horizontal",
       shadeIntensity: 0.5,
       gradientToColors: undefined,
       inverseColors: false,
       opacityFrom: 0,
       opacityTo: 0,
-    }
-  }
-
+    },
+  },
 };
 </script>
-
-<template>
-  <div id="chart">
-    <apexchart type="area" width="109px" :options="chartOptions" :series="series"></apexchart>
-  </div>
-</template>
-
-<style scoped>
-
-</style>
+<style scoped></style>
