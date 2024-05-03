@@ -20,7 +20,7 @@ const variants = {
   <td :class="variants[variant]">
       <slot name="title"/>
       <slot name="content"/>
-        <slot name="graph"/>
+      <slot name="graph"/>
   </td>
 </template>
 
